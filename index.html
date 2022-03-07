@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            /* background-color: antiquewhite; */
+            margin: 0px;
+        }
+
+        .gameArea {
+            /* background-color: aqua; */
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ALT + SHIFT + F format document */
+        .row {
+            display: flex;
+        }
+
+        input[type=text] {
+            display: block;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            font-size: 7rem;
+            border: 2px solid black;
+        }
+
+        input[type=text]:focus {
+            border: 2px solid black;
+            outline: 0px;
+        }
+
+        #cell1 {
+            border-top: 0px;
+            border-left: 0px;
+        }
+
+        #cell2 {
+            border-top: 0px;
+        }
+
+        #cell3 {
+            border-top: 0px;
+            border-right: 0px;
+        }
+
+        #cell4 {
+            border-left: 0px;
+        }
+
+        #cell6 {
+            border-right: 0px;
+        }
+
+        #cell7 {
+            border-left: 0px;
+            border-bottom: 0px;
+        }
+
+        #cell8 {
+            border-bottom: 0px;
+        }
+
+        #cell9 {
+            border-bottom: 0px;
+            border-right: 0px;
+        }
+
+        .btnReset {
+            margin-top: 10px;
+            width: 100px;
+            height: 50px;
+            font-size: 1.5rem;
+            border: 0px;
+            border-radius: 5px;
+            background-color: slategray;
+            cursor: pointer;
+        }
+
+        .btnReset:hover {
+            background-color: rgb(185, 210, 236);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gameArea">
+        <h1>Tic Tac Toe</h1>
+        <h2>Player One X - Player Two O</h2>
+        <h2>Score</h2>
+        <h2>
+            <span id="p1Score">0</span>-<span id="p2Score">0</span>
+        </h2>
+        <div class="row">
+            <input id="cell1" type="text" value="" readonly>
+            <input id="cell2" type="text" value="" readonly>
+            <input id="cell3" type="text" value="" readonly>
+        </div>
+        <div class="row">
+            <input id="cell4" type="text" value="4" readonly>
+            <input id="cell5" type="text" value="5" readonly>
+            <input id="cell6" type="text" value="6" readonly>
+        </div>
+        <div class="row">
+            <input id="cell7" type="text" value="7" readonly>
+            <input id="cell8" type="text" value="8" readonly>
+            <input id="cell9" type="text" value="9" readonly>
+        </div>
+        <button class="btnReset">Reset</button>
+    </div>
+    <script>
+        let isPlayerOne = true;
+        const inputs = document.querySelectorAll("input");
+        console.log(inputs);
+    </script>
+</body>
+
+</html>
