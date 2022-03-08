@@ -94,7 +94,8 @@
         .btnReset:hover {
             background-color: rgb(185, 210, 236);
         }
-        .kirmiziCizgi{
+
+        .kirmiziCizgi {
             border-bottom: 1px solid red;
         }
     </style>
@@ -104,8 +105,8 @@
     <div class="gameArea">
         <h1>Tic Tac Toe</h1>
         <h2>
-            <span class="kirmiziCizgi" id="playerOne">Player One X</span> 
-            - 
+            <span class="kirmiziCizgi" id="playerOne">Player One X</span>
+            -
             <span id="playerTwo">Player Two O</span>
         </h2>
         <h2>Score</h2>
@@ -130,53 +131,119 @@
         <button class="btnReset">Reset</button>
     </div>
     <script>
+        //Array.from ile nodelist to array yapabilirsiniz.
         const inputs = document.querySelectorAll("input");
         const playerOne = document.getElementById("playerOne");
         const playerTwo = document.getElementById("playerTwo");
+        const p1Score = document.getElementById("p1Score");
+        const p2Score = document.getElementById("p2Score");
+        const btnReset = document.getElementsByClassName("btnReset")[0];
         let isPlayerOne = true;
-        //2. Görev Her bir inputa değer atarken atadığınız değeri bir dizide tutunuz.
+        let playerOneScore = 0;
+        let playerTwoScore = 0;
+
+        //3. Görev Kazanma durumlarını analiz ederek bir dizide tutunuz.
         let winingCombinations = [
-            ["00","01","02"],
-            ["10","11","12"]
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
         ]
-        let combinations = [
-            ["X","O","X"], //row1 
-            ["","",""],//row2
-            ["","",""]//row2
-        ];
-        let combinations2 = ["","","","","","","","",""];
+        //2. Görev Her bir inputa değer atarken atadığınız değeri bir dizide tutunuz.
+        let combinations = ["", "", "", "", "", "", "", "", ""];
         //1. Görev tıklanan input'a playerOne yada playerTwo olma durumuna göre X yada O koyma işlemi gerçekleştiriniz.(Not ilgili inputta veri varsa tekrar X/O yapmamalı.)
-        for (const iterator of combinations) {
-            console.log(iterator[0])
-        }
-        console.log(combinations[0][2])
         for (const input of inputs) {
-            input.addEventListener("click",function(e){
-                if(e.target.value == ""){
-                    console.log(e.target.id);
-                    if(isPlayerOne){
+            input.addEventListener("click", function (e) {
+                if (e.target.value == "") {
+                    let id = e.target.id[e.target.id.length - 1];
+                    let index = id - 1;
+                    if (isPlayerOne) {
                         e.target.value = 'X';
-                        isPlayerOne = false;
-                        playerTwo.classList.add("kirmiziCizgi");
-                        playerOne.classList.remove("kirmiziCizgi");
+                        combinations[index] = 'X';
+                        turnPlayerTwo();
                     }
-                    else{
+                    else {
                         e.target.value = 'O';
-                        isPlayerOne = true;
-                        playerOne.classList.add("kirmiziCizgi");
-                        playerTwo.classList.remove("kirmiziCizgi");
+                        combinations[index] = 'O';
+                        turnPlayerOne();
                     }
-                    
+                    //4. Görev kazanını kontrol et fonksiyonu yaparak her bir inputa X/O yazarken kazananın olup olmamasına gerekli işlemleri yapınız.
+                    checkWinner();
                 }
             })
         }
-        
-        //3. Görev Kazanma durumlarını analiz ederek bir dizide tutunuz.
-        //4. Görev kazanını kontrol et fonksiyonu yaparak her bir inputa X/O yazarken kazananın olup olmamasına gerekli işlemleri yapınız.
+
+        function checkWinner() {
+            if (combinations.every(x => x !== '')) {
+                alert("Draw!");
+                clearCells();
+                turnPlayerOne();
+                return;
+            }
+            for (const comb of winingCombinations) {
+                let a = combinations[comb[0]];
+                let b = combinations[comb[1]];
+                let c = combinations[comb[2]];
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+                if (a === b && b === c) {
+                    if (a === 'X') {
+                        alert("winner player one!");
+                        playerOneScore++;
+                    }
+                    else {
+                        alert("winner player two!");
+                        playerTwoScore++;
+                    }
+                    clearCells();
+                    updateScore();
+                    turnPlayerOne();
+                    return;
+                }
+            }
+        }
+
+        function clearCells() {
+            combinations = ["", "", "", "", "", "", "", "", ""];
+            for (const iterator of inputs) {
+                iterator.value = "";
+            }
+        }
+
+        function updateScore() {
+            p1Score.innerText = playerOneScore;
+            p2Score.innerText = playerTwoScore;
+        }
+
+        function clearScore() {
+            playerOneScore = 0;
+            playerTwoScore = 0;
+            updateScore();
+        }
+
+        function turnPlayerOne() {
+            isPlayerOne = true;
+            playerOne.classList.add("kirmiziCizgi");
+            playerTwo.classList.remove("kirmiziCizgi");
+        }
+
+        function turnPlayerTwo() {
+            isPlayerOne = false;
+            playerTwo.classList.add("kirmiziCizgi");
+            playerOne.classList.remove("kirmiziCizgi");
+        }
+
         //5. Görev reset butonuna tıklandığında tüm programı default değerlerine döndürünüz.
-        
-        //Array.from ile nodelist to array yapabilirsiniz.
-        
+        btnReset.addEventListener("click", function (e) {
+            clearCells();
+            clearScore();
+            turnPlayerOne();
+        });
     </script>
 </body>
 
