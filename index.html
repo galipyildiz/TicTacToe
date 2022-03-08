@@ -94,13 +94,20 @@
         .btnReset:hover {
             background-color: rgb(185, 210, 236);
         }
+        .kirmiziCizgi{
+            border-bottom: 1px solid red;
+        }
     </style>
 </head>
 
 <body>
     <div class="gameArea">
         <h1>Tic Tac Toe</h1>
-        <h2>Player One X - Player Two O</h2>
+        <h2>
+            <span class="kirmiziCizgi" id="playerOne">Player One X</span> 
+            - 
+            <span id="playerTwo">Player Two O</span>
+        </h2>
         <h2>Score</h2>
         <h2>
             <span id="p1Score">0</span>-<span id="p2Score">0</span>
@@ -111,21 +118,65 @@
             <input id="cell3" type="text" value="" readonly>
         </div>
         <div class="row">
-            <input id="cell4" type="text" value="4" readonly>
-            <input id="cell5" type="text" value="5" readonly>
-            <input id="cell6" type="text" value="6" readonly>
+            <input id="cell4" type="text" value="" readonly>
+            <input id="cell5" type="text" value="" readonly>
+            <input id="cell6" type="text" value="" readonly>
         </div>
         <div class="row">
-            <input id="cell7" type="text" value="7" readonly>
-            <input id="cell8" type="text" value="8" readonly>
-            <input id="cell9" type="text" value="9" readonly>
+            <input id="cell7" type="text" value="" readonly>
+            <input id="cell8" type="text" value="" readonly>
+            <input id="cell9" type="text" value="" readonly>
         </div>
         <button class="btnReset">Reset</button>
     </div>
     <script>
-        let isPlayerOne = true;
         const inputs = document.querySelectorAll("input");
-        console.log(inputs);
+        const playerOne = document.getElementById("playerOne");
+        const playerTwo = document.getElementById("playerTwo");
+        let isPlayerOne = true;
+        //2. Görev Her bir inputa değer atarken atadığınız değeri bir dizide tutunuz.
+        let winingCombinations = [
+            ["00","01","02"],
+            ["10","11","12"]
+        ]
+        let combinations = [
+            ["X","O","X"], //row1 
+            ["","",""],//row2
+            ["","",""]//row2
+        ];
+        let combinations2 = ["","","","","","","","",""];
+        //1. Görev tıklanan input'a playerOne yada playerTwo olma durumuna göre X yada O koyma işlemi gerçekleştiriniz.(Not ilgili inputta veri varsa tekrar X/O yapmamalı.)
+        for (const iterator of combinations) {
+            console.log(iterator[0])
+        }
+        console.log(combinations[0][2])
+        for (const input of inputs) {
+            input.addEventListener("click",function(e){
+                if(e.target.value == ""){
+                    console.log(e.target.id);
+                    if(isPlayerOne){
+                        e.target.value = 'X';
+                        isPlayerOne = false;
+                        playerTwo.classList.add("kirmiziCizgi");
+                        playerOne.classList.remove("kirmiziCizgi");
+                    }
+                    else{
+                        e.target.value = 'O';
+                        isPlayerOne = true;
+                        playerOne.classList.add("kirmiziCizgi");
+                        playerTwo.classList.remove("kirmiziCizgi");
+                    }
+                    
+                }
+            })
+        }
+        
+        //3. Görev Kazanma durumlarını analiz ederek bir dizide tutunuz.
+        //4. Görev kazanını kontrol et fonksiyonu yaparak her bir inputa X/O yazarken kazananın olup olmamasına gerekli işlemleri yapınız.
+        //5. Görev reset butonuna tıklandığında tüm programı default değerlerine döndürünüz.
+        
+        //Array.from ile nodelist to array yapabilirsiniz.
+        
     </script>
 </body>
 
